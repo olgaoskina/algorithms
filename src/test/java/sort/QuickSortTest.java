@@ -9,7 +9,6 @@ import utils.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class QuickSortTest {
@@ -29,12 +28,9 @@ public class QuickSortTest {
         Stream<Integer[]> stream = Arrays
                 .stream(generators)
                 .map(g -> g.generateTestArray(SIZE))
-                .map(array -> quickSort.sort(array, Comparator.<Integer>naturalOrder()))
-                .filter(ArrayUtils::isNotSorted);
+                .map(array -> quickSort.sort(array, Comparator.<Integer>naturalOrder()));
 
-        assert stream.count() != 0 :
-                "These arrays were not sorted: \n" +
-                        stream.map(Arrays::toString).collect(Collectors.joining("\n"));
+        assert stream.allMatch(ArrayUtils::isSorted) : "Not all arrays were sorted: \n";
         System.out.println("All arrays were sorted");
     }
 }
