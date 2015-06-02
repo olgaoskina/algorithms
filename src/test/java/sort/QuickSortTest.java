@@ -8,6 +8,7 @@ import org.junit.Test;
 import utils.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,7 +29,7 @@ public class QuickSortTest {
         Stream<Integer[]> stream = Arrays
                 .stream(generators)
                 .map(g -> g.generateTestArray(SIZE))
-                .map(quickSort::sort)
+                .map(array -> quickSort.sort(array, Comparator.<Integer>naturalOrder()))
                 .filter(ArrayUtils::isNotSorted);
 
         assert stream.count() != 0 :
